@@ -20,7 +20,13 @@ metadata:
   {{- end }}
 spec:
   hosts:
-  - "*"
+  {{- if .Values.virtualservice.hosts }}
+    {{- range .Values.virtualservice.hosts }}
+      - {{ . | quote }}
+    {{- end }}
+  {{- else }}
+    - "*"
+  {{- end }}
   {{- if .Values.virtualservice.gatewayName }}
   gateways:
   - {{ .Values.virtualservice.gatewayName }}
